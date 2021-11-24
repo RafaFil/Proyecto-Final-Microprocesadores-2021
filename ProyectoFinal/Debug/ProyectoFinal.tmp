@@ -1,0 +1,34 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\Debug\ProyectoFinal.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>ProyectoFinal.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>ProyectoFinal.map</FILE>
+  <FILE>ProyectoFinal.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <setupADC><FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm</FILE><LINE>28</LINE></setupADC>
+  <convADC><FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm</FILE><LINE>17</LINE></convADC>
+  <nums><FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm</FILE><LINE>14</LINE></nums>
+  <setupPuntero><FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm</FILE><LINE>42</LINE></setupPuntero>
+  <start><FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm</FILE><LINE>46</LINE></start>
+  <bucleGenerador><FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm</FILE><LINE>53</LINE></bucleGenerador>
+  <generaNumero><FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm</FILE><LINE>65</LINE></generaNumero>
+  <fin><FILE>C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm</FILE><LINE>70</LINE></fin>
+ </LABELS>
+</ASSEMBLER_INFO>
