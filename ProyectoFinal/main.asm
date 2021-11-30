@@ -16,6 +16,8 @@
 .CSEG
 convADC:
 	in		r30,	SREG	; guardo contexto
+	ldi		r16,	0b01101111
+	sts		ADCSRA,	r16
 
 	cpi 	r31,	0x00	; chequeo si la bandera está en 0, entonces nunca fue leída la seed
 	brne	2				; si no es 0, ya leí una seed, salto al final de la interrupción (salteo dos líneas)

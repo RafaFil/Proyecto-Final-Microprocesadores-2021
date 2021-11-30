@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm Thu Nov 25 19:30:47 2021
+AVRASM ver. 2.2.8  C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm Mon Nov 29 22:51:34 2021
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.6.364\avrasm\inc\m328Pdef.inc'
@@ -992,7 +992,7 @@ AVRASM ver. 2.2.8  C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proye
                                  ;
                                  
                                  .ORG	0x0000
-000000 940c 0034                 	jmp		setupADC
+000000 940c 0037                 	jmp		setupADC
                                  .ORG	0x002A
 00002a 940c 002c                 	jmp		convADC
                                  
@@ -1002,56 +1002,63 @@ AVRASM ver. 2.2.8  C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proye
                                  .CSEG
                                  convADC:
 00002c b7ef                      	in		r30,	SREG	; guardo contexto
+00002d e60f                      	ldi		r16,	0b01101111
+00002e 9300 007a                 	sts		ADCSRA,	r16
                                  
-00002d 30f0                      	cpi 	r31,	0x00	; chequeo si la bandera está en 0, entonces nunca fue leída la seed
-00002e f699                      	brne	2				; si no es 0, ya leí una seed, salto al final de la interrupción (salteo dos líneas)
-00002f 9100 0078                 	lds		r16,	ADCL	; leo el byte inferior (0-255) para usarlo como seed
-000031 e0f1                      	ldi		r31,	0x01	; levanto la bandera para no cambiar más la seed
+000030 30f0                      	cpi 	r31,	0x00	; chequeo si la bandera está en 0, entonces nunca fue leída la seed
+000031 f681                      	brne	2				; si no es 0, ya leí una seed, salto al final de la interrupción (salteo dos líneas)
+000032 9100 0078                 	lds		r16,	ADCL	; leo el byte inferior (0-255) para usarlo como seed
+000034 e0f1                      	ldi		r31,	0x01	; levanto la bandera para no cambiar más la seed
                                  
-000032 bfef                      	out		SREG,	r30		; recupero el contexto
-000033 9518                      	reti
+000035 bfef                      	out		SREG,	r30		; recupero el contexto
+000036 9518                      	reti
                                  
                                  setupADC:
                                  	; ADCSRA |= (1<<ADEN) | (1<<ADSC) | (1<<ADATE) | (1<<ADIE) | (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
-000034 ee0f                      	ldi		r16,	0b11101111
-000035 9300 007a                 	sts		ADCSRA,	r16
+000037 ee0f                      	ldi		r16,	0b11101111
+000038 9300 007a                 	sts		ADCSRA,	r16
                                  	
                                  	; ADMUX |= (1<<REFS0);
-000037 e400                      	ldi		r16,	0b01000000
-000038 9300 007c                 	sts		ADMUX,	r16
+00003a e400                      	ldi		r16,	0b01000000
+00003b 9300 007c                 	sts		ADMUX,	r16
                                  
-00003a e0f0                      	ldi		r31,	0x00	; uso como bandera para leer una sola seed para los números random
-00003b e040                      	ldi		r20,	0x00	; valor para comparar cuándo salgo del bucle de generar números
+00003d e0f0                      	ldi		r31,	0x00	; uso como bandera para leer una sola seed para los números random
+00003e e040                      	ldi		r20,	0x00	; valor para comparar cuándo salgo del bucle de generar números
                                  
-00003c 9478                      	sei
+00003f 9478                      	sei
                                  
                                  setupPuntero:
-00003d e0a0                      	ldi		r26,	low(nums)		; configuro registro X para apuntar a la primera dirección del
-00003e e0b1                      	ldi		r27,	high(nums)		; espacio de memoria de los números
+000040 e0a0                      	ldi		r26,	low(nums)		; configuro registro X para apuntar a la primera dirección del
+000041 e0b1                      	ldi		r27,	high(nums)		; espacio de memoria de los números
                                  
                                  start:
-00003f 30f0                          cpi		r31,	0x00	; mientras no haya leído la seed, espero
-000040 f3f1                      	breq	start
+000042 30f0                          cpi		r31,	0x00	; mientras no haya leído la seed, espero
+000043 f3f1                      	breq	start
                                  
-000041 ef2f                      	ldi		r18,	low(511)	; cargo en este par de registros la cantidad de números a generar
-000042 e031                      	ldi		r19,	high(511)
+000044 ef2f                      	ldi		r18,	low(511)	; cargo en este par de registros la cantidad de números a generar
+000045 e031                      	ldi		r19,	high(511)
+                                 
+000046 e513                      	ldi		r17,	83			; número que voy a sumar para generar los números aleatorios
                                  
                                  bucleGenerador:
-000043 940e 004c                 	call	generaNumero
-000045 952a                      	dec		r18
-000046 1324                      	cpse	r18,	r20
-000047 cffb                      	rjmp	bucleGenerador
+000047 940e 0050                 	call	generaNumero
+000049 952a                      	dec		r18
+00004a 1324                      	cpse	r18,	r20
+00004b cffb                      	rjmp	bucleGenerador
                                  
-000048 953a                      	dec		r19
-000049 1334                      	cpse	r19,	r20
-00004a cff8                      	rjmp	bucleGenerador
+00004c 953a                      	dec		r19
+00004d 1334                      	cpse	r19,	r20
+00004e cff8                      	rjmp	bucleGenerador
                                  
-00004b cfff                      	rjmp	PC+0
+00004f c006                      	rjmp	fin
                                  
                                  generaNumero:
-00004c 0f00                      	add		r16,	r16		; lo agrego con sí mismo y guardo el módulo 255
-00004d 930d                      	st		X+,		r16		; guardo el número generado en la dirección del puntero X e incremento el puntero
-00004e 9508                      	ret
+000050 0f00                      	add		r16,	r16		; lo agrego con sí mismo y guardo el módulo 255
+000051 1f00                      	rol		r16				; roto cíclicamente dos bit a la izquierda (multiplico por 2^2)
+000052 1f00                      	rol		r16
+000053 1f01                      	adc		r16,	r17		; sumo un valor constante
+000054 930d                      	st		X+,		r16		; guardo el número generado en la dirección del puntero X e incremento el puntero
+000055 9508                      	ret
                                  
                                  fin:
 
@@ -1073,13 +1080,13 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   1 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:   8 r17:   0 r18:   3 r19:   3 r20:   3 
+r13:   0 r14:   0 r15:   0 r16:  13 r17:   2 r18:   3 r19:   3 r20:   3 
 r21:   0 r22:   0 r23:   0 r24:   0 r25:   0 r26:   1 r27:   1 r28:   0 
 r29:   0 r30:   2 r31:   4 
-Registers used: 9 out of 35 (25.7%)
+Registers used: 10 out of 35 (28.6%)
 
 "ATmega328P" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   0 add   :   1 adiw  :   0 and   :   0 
+.lds  :   0 .sts  :   0 adc   :   1 add   :   1 adiw  :   0 and   :   0 
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   0 brcs  :   0 break :   0 breq  :   1 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
@@ -1089,21 +1096,21 @@ clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
 cpi   :   2 cpse  :   2 dec   :   2 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   0 jmp   :   2 
-ld    :   0 ldd   :   0 ldi   :   9 lds   :   1 lpm   :   0 lsl   :   0 
+ld    :   0 ldd   :   0 ldi   :  11 lds   :   1 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :   1 pop   :   0 
-push  :   0 rcall :   0 ret   :   1 reti  :   1 rjmp  :   4 rol   :   0 
+push  :   0 rcall :   0 ret   :   1 reti  :   1 rjmp  :   4 rol   :   2 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   0 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :   1 std   :   0 sts   :   2 
+sez   :   0 sleep :   0 spm   :   0 st    :   1 std   :   0 sts   :   3 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 18 out of 113 (15.9%)
+Instructions used: 20 out of 113 (17.7%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000a0     80      0     80   32768   0.2%
+[.cseg] 0x000000 0x0000ae     94      0     94   32768   0.3%
 [.dseg] 0x000100 0x000300      0    512    512    2048  25.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm Thu Nov 25 19:30:47 2021
+AVRASM ver. 2.2.8  C:\Users\59899\Documents\Laboratorios MICROPROCESADORES\Proyecto-Final-Microprocesadores-2021\ProyectoFinal\main.asm Mon Nov 29 22:51:34 2021
 
 
 EQU  SIGNATURE_000 0000001e
@@ -695,11 +695,11 @@ EQU  ACIaddr      0000002e
 EQU  TWIaddr      00000030
 EQU  SPMRaddr     00000032
 EQU  INT_VECTORS_SIZE 00000034
-CSEG setupADC     00000034
+CSEG setupADC     00000037
 CSEG convADC      0000002c
 DSEG nums         00000100
-CSEG setupPuntero 0000003d
-CSEG start        0000003f
-CSEG bucleGenerador 00000043
-CSEG generaNumero 0000004c
-CSEG fin          0000004f
+CSEG setupPuntero 00000040
+CSEG start        00000042
+CSEG bucleGenerador 00000047
+CSEG generaNumero 00000050
+CSEG fin          00000056
