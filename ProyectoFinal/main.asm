@@ -50,6 +50,8 @@ start:
 	ldi		r18,	low(511)	; cargo en este par de registros la cantidad de números a generar
 	ldi		r19,	high(511)
 
+	ldi		r17,	83			; número que voy a sumar para generar los números aleatorios
+
 bucleGenerador:
 	call	generaNumero
 	dec		r18
@@ -60,11 +62,13 @@ bucleGenerador:
 	cpse	r19,	r20
 	rjmp	bucleGenerador
 
-	rjmp	PC+0
+	rjmp	fin
 
 generaNumero:
 	add		r16,	r16		; lo agrego con sí mismo y guardo el módulo 255
-	ror		r16				; roto cíclicamente un bit a la derecha
+	rol		r16				; roto cíclicamente dos bit a la izquierda (multiplico por 2^2)
+	rol		r16
+	adc		r16,	r17		; sumo un valor constante
 	st		X+,		r16		; guardo el número generado en la dirección del puntero X e incremento el puntero
 	ret
 
