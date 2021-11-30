@@ -64,6 +64,7 @@ bucleGenerador:
 
 generaNumero:
 	add		r16,	r16		; lo agrego con sí mismo y guardo el módulo 255
+	ror		r16				; roto cíclicamente un bit a la derecha
 	st		X+,		r16		; guardo el número generado en la dirección del puntero X e incremento el puntero
 	ret
 
